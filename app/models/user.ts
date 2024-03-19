@@ -2,10 +2,8 @@ import { DateTime } from 'luxon'
 import { withAuthFinder } from '@adonisjs/auth'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
-import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
+import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
-import Job from './job.js'
-import type {  HasOne } from '@adonisjs/lucid/types/relations'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -25,6 +23,8 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare password: string
   @column()
+  declare job: number
+  @column()
   declare area: string
   @column()
   declare tel: string
@@ -43,6 +43,4 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   static accessTokens = DbAccessTokensProvider.forModel(User)
 
-  @hasOne(() => Job)
-  declare job : HasOne<typeof Job>
 }
