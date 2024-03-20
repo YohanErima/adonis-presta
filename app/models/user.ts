@@ -33,7 +33,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare enabled: string
   @column()
-  declare isAdmin: string
+  declare is_admin: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

@@ -13,7 +13,7 @@ export default class extends BaseSchema {
       table.string("tel").notNullable()
       table.string("img").notNullable()
       table.boolean("enabled").defaultTo(false)
-      table.boolean("isAdmin").defaultTo(false)
+      table.boolean("is_admin").defaultTo(false)
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()
     })
