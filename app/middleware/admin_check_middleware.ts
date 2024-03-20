@@ -2,7 +2,6 @@ import type { HttpContext } from '@adonisjs/core/http'
 import type { NextFn } from '@adonisjs/core/types/http'
 
 export default class AdminCheckMiddleware {
-
   async handle(ctx: HttpContext, next: NextFn) {
     /**
      * Middleware logic goes here (before the next call)
@@ -15,14 +14,13 @@ export default class AdminCheckMiddleware {
     const output = await next()
     return output
   }
-  async adminCheck({auth, response}: HttpContext, next: NextFn){
-    
-    const user = auth.user;
+  async adminCheck({ auth, response }: HttpContext, next: NextFn) {
+    const user = auth.user
 
-    if(user?.is_admin){
-      response.unauthorized({ message: 'You are not authorized to perform this action' });
+    if (!user?.is_admin) {
+      response.unauthorized({ message: 'You are not authorized to perform this action' })
     }
 
-    await next();
+    await next()
   }
 }

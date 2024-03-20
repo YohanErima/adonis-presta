@@ -41,26 +41,25 @@ export default class AdminsController {
     return response.ok({ message: 'User updated' })
   }
 
-  async patchImg({ auth, request, response }: HttpContext) {
-    const authUser = auth.user
+  async patchImgById({ request, response }: HttpContext) {
     const { img } = request.all()
-
+    const { id } = request.params()
     if (!img) {
       return response.badRequest({ message: 'You need a image!' })
     }
-    const user = await User.findBy('email', authUser?.email)
+    const user = await User.find(id)
 
     if (!user) {
       return response.badRequest({ message: 'Error with the User' })
     }
   }
-  async patchPassword({ auth, request, response }: HttpContext) {
-    const authUser = auth.user
+  async patchPasswordById({ request, response }: HttpContext) {
+    const { id } = request.params()
     const { password } = request.all()
     if (!password) {
       return response.badRequest({ message: 'You need a new password!' })
     }
-    const user = await User.findBy('email', authUser?.email)
+    const user = await User.find(id)
     if (!user) {
       return response.badRequest({ message: 'Error with the User' })
     }
