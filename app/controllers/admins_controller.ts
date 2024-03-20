@@ -98,7 +98,7 @@ export default class AdminsController {
 
     try {
       user.password = password
-      user.save()
+      await user.save()
       return response.ok({ message: 'Password updated!' })
     } catch (error) {
       console.log(error)
@@ -121,10 +121,21 @@ export default class AdminsController {
   }
   async enableUserById({ request, response }: HttpContext) {
     const { id } = request.params()
+    const { enabled } = request.all()
     const user = await User.find(id)
     if (!user) {
       return response.badRequest({ message: "User doesn't exist! " })
     }
+
+    try {
+      user.enabled = enabled
+      await user.save()
+      return response.ok({ message: 'Enabled updated!' })
+    } catch (error) {
+      console.log(error)
+      return response.internalServerError({ message: 'Error server' })
+    }
+
     return response
   }
 }

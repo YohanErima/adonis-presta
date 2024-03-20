@@ -7,9 +7,11 @@ export default class AdminCheckMiddleware {
      * Middleware logic goes here (before the next call)
      */
     const user = await auth?.user
-    console.log('#################################################################', user?.is_admin)
-    if (!user?.is_admin) {
-      response.unauthorized({ message: 'You are not authorized to perform this action' })
+    if (!user) {
+      return response.internalServerError('Error auth')
+    }
+    if (!user.is_admin) {
+      return response.unauthorized({ message: 'You are not authorized to perform this action' })
     }
 
     /**
